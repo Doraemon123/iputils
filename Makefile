@@ -13,17 +13,16 @@ ADDLIB=
 LDFLAG_STATIC=-Wl,-Bstatic        #Wl选项告诉编译器将后面的参数传递给链接器，对接下来的-l选项使用静态链接
 LDFLAG_DYNAMIC=-Wl,-Bdynamic      #对接下来的-l选项使用动态链接
 #指定加载库，告诉链接器从哪里寻找库文件
-LDFLAG_CAP=-lcap
-LDFLAG_GNUTLS=-lgnutls-openssl
+LDFLAG_CAP=-lcap                    #在link的时候包含cap这个库
+LDFLAG_GNUTLS=-lgnutls-openssl            
 LDFLAG_CRYPTO=-lcrypto
 LDFLAG_IDN=-lidn
 LDFLAG_RESOLV=-lresolv
 LDFLAG_SYSFS=-lsysfs
 
 #
-#Options
+#Options    #变量定义，设置开关
 #
-#变量定义，设置开关
 #Capability support (with libcap) [yes|static|no]
 #功能支持（与libcap的）[是|静态|否]
 USE_CAP=yes
@@ -68,10 +67,9 @@ ENABLE_RDISC_SERVER=no
 # What a pity, all new gccs are buggy and -Werror does not work. Sigh.
 # CCOPT=-fno-strict-aliasing -Wstrict-prototypes -Wall -Werror -g
 #-Wstrict-prototypes: 如果函数的声明或定义没有指出参数类型，编译器就发出警告
-
-CCOPT=-fno-strict-aliasing -Wstrict-prototypes -Wall -g
-CCOPTOPT=-O3
-GLIBCFIX=-D_GNU_SOURCE
+CCOPT=-fno-strict-aliasing -Wstrict-prototypes -Wall -g         #gcc参数 编译选项
+CCOPTOPT=-O3                 #-O3 '   turns   on   all   optimizations   specified   优化级别最高                              
+GLIBCFIX=-D_GNU_SOURCE       #_GNU_SOURCE 将允许使用全部的 glibc 的功能
 DEFINES=
 LDLIB=
 
@@ -90,7 +88,7 @@ FUNC_LIB = $(if $(filter static,$(1)),$(LDFLAG_STATIC) $(2) $(LDFLAG_DYNAMIC),$(
 #USE_CRYPTO: LIB_CRYPTO
 
 #GNU TSL库ping6的设置以及ping6密码库的设置
-ifneq ($(USE_GNUTLS),no)
+ifneq ($(USE_GNUTLS),no)                            #判断不等
 	LIB_CRYPTO = $(call FUNC_LIB,$(USE_GNUTLS),$(LDFLAG_GNUTLS))
 	DEF_CRYPTO = -DUSE_GNUTLS
 else
@@ -107,7 +105,7 @@ LIB_RESOLV = $(call FUNC_LIB,$(USE_RESOLV),$(LDFLAG_RESOLV))
 #功能支持（与libcap的）[是|静态|否]
 #USE_CAP=yes
 #USE_CAP:  DEF_CAP, LIB_CAP
-ifneq ($(USE_CAP),no)
+ifneq ($(USE_CAP),no)                             
 	DEF_CAP = -DCAPABILITIES
 	LIB_CAP = $(call FUNC_LIB,$(USE_CAP),$(LDFLAG_CAP))
 endif
