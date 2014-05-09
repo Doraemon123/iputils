@@ -157,14 +157,10 @@ endif
 
 #IP设置
 # -------------------------------------
-IPV4_TARGETS=tracepath ping clockdiff rdisc arping tftpd rarpd
+IPV4_TARGETS=tracepath ping clockdiff rdisc arping tftpd rarpd       #目标配置，iputils工具
 IPV6_TARGETS=tracepath6 traceroute6 ping6
 TARGETS=$(IPV4_TARGETS) $(IPV6_TARGETS)
 
-#CCOPT=-fno-strict-aliasing -Wstrict-prototypes -Wall -g
-#CCOPTOPT=-O3
-#GLIBCFIX=-D_GNU_SOURCE
-#DEFINES=
 CFLAGS=$(CCOPTOPT) $(CCOPT) $(GLIBCFIX) $(DEFINES)
 LDLIBS=$(LDLIB) $(ADDLIB)
 
